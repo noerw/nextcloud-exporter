@@ -164,6 +164,26 @@ type PHP struct {
 	MemoryLimit       int64  `json:"memory_limit"`
 	MaxExecutionTime  uint   `json:"max_execution_time"`
 	UploadMaxFilesize int64  `json:"upload_max_filesize"`
+	OpCache           struct {
+		Stats OpCacheStats `json:"opcache_statistics"`
+	} `json:"opcache"`
+	APCu struct {
+		Cache APCuCache `json:"cache"`
+	} `json:"apcu"`
+}
+
+type OpCacheStats struct {
+	Hits          int64 `json:"hits"`
+	Misses        int64 `json:"misses"`
+	CachedScripts int64 `json:"num_cached_scripts"`
+	CachedKeys    int64 `json:"num_cached_keys"`
+}
+
+type APCuCache struct {
+	Hits    int64 `json:"num_hits"`
+	Misses  int64 `json:"num_misses"`
+	Inserts int64 `json:"num_inserts"`
+	Entries int64 `json:"num_entries"`
 }
 
 // Database contains information about the database used by nextcloud.

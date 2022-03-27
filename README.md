@@ -186,6 +186,14 @@ These metrics are exported by `nextcloud-exporter`:
 | nextcloud_php_info                     | Contains meta information about PHP as labels. Value is always 1.      |
 | nextcloud_php_memory_limit_bytes       | Configured PHP memory limit in bytes                                   |
 | nextcloud_php_upload_max_size_bytes    | Configured maximum upload size in bytes                                |
+| nextcloud_php_opcache_hits_total       | Number of hits on the PHP OpCache                                      |
+| nextcloud_php_opcache_misses_total     | Number of misses on the PHP OpCache                                    |
+| nextcloud_php_opcache_scripts_total    | Number of scripts cached in PHP OpCache                                |
+| nextcloud_php_opcache_keys_total       | Number of keys in PHP OpCache                                          |
+| nextcloud_php_apcu_hits_total          | Number of hits on the PHP OpCache                                      |
+| nextcloud_php_apcu_misses_total        | Number of misses on the PHP OpCache                                    |
+| nextcloud_php_apcu_inserts_total       | Number of inserts into PHP APCu                                        |
+| nextcloud_php_apcu_keys_total          | Number of entries in PHP APCu                                          |
 | nextcloud_scrape_errors_total          | Counts the number of scrape errors by this collector                   |
 | nextcloud_shares_federated_total       | Number of federated shares by direction `sent` / `received`            |
 | nextcloud_shares_total                 | Number of shares by type: <br> `authlink`: shared password protected links <br> `group`: shared groups <br>`link`: all shared links <br> `user`: shared users |

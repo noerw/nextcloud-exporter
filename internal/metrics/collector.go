@@ -65,6 +65,41 @@ var (
 		metricPrefix+"php_upload_max_size_bytes",
 		"Configured maximum upload size in bytes.",
 		nil, nil)
+
+	phpOpCacheHits = prometheus.NewDesc(
+		metricPrefix+"php_opcache_hits_total",
+		"Number of hits to scripts cached in OpCache.",
+		nil, nil)
+	phpOpCacheMisses = prometheus.NewDesc(
+		metricPrefix+"php_opcache_misses_total",
+		"Number of misses in OpCache.",
+		nil, nil)
+	phpOpCachedScripts = prometheus.NewDesc(
+		metricPrefix+"php_opcache_scripts_total",
+		"Number of scripts cached in OpCache.",
+		nil, nil)
+	phpOpCachedKeys = prometheus.NewDesc(
+		metricPrefix+"php_opcache_keys_total",
+		"Number of keys in OpCache.",
+		nil, nil)
+
+	phpAPCuHits = prometheus.NewDesc(
+		metricPrefix+"php_apcu_hits_total",
+		"Number of hits in APCu cache.",
+		nil, nil)
+	phpAPCuMisses = prometheus.NewDesc(
+		metricPrefix+"php_apcu_misses_total",
+		"Number of misses in APCu cache.",
+		nil, nil)
+	phpAPCuInserts = prometheus.NewDesc(
+		metricPrefix+"php_apcu_inserts_total",
+		"Number of inserts into APCu cache.",
+		nil, nil)
+	phpAPCuEntries = prometheus.NewDesc(
+		metricPrefix+"php_apcu_keys_total",
+		"Number of entries cached in APCu.",
+		nil, nil)
+
 	databaseSizeDesc = prometheus.NewDesc(
 		metricPrefix+"database_size_bytes",
 		"Size of database in bytes as reported from engine.",
@@ -212,6 +247,14 @@ func collectSimpleMetrics(ch chan<- prometheus.Metric, status *serverinfo.Server
 			desc:  phpMaxUploadSizeDesc,
 			value: float64(status.Data.Server.PHP.UploadMaxFilesize),
 		},
+		{phpOpCacheHits, float64(status.Data.Server.PHP.OpCache.Stats.Hits)},
+		{phpOpCacheMisses, float64(status.Data.Server.PHP.OpCache.Stats.Misses)},
+		{phpOpCachedScripts, float64(status.Data.Server.PHP.OpCache.Stats.CachedScripts)},
+		{phpOpCachedKeys, float64(status.Data.Server.PHP.OpCache.Stats.CachedKeys)},
+		{phpAPCuHits, float64(status.Data.Server.PHP.APCu.Cache.Hits)},
+		{phpAPCuMisses, float64(status.Data.Server.PHP.APCu.Cache.Misses)},
+		{phpAPCuInserts, float64(status.Data.Server.PHP.APCu.Cache.Inserts)},
+		{phpAPCuEntries, float64(status.Data.Server.PHP.APCu.Cache.Entries)},
 	}
 	for _, m := range metrics {
 		metric, err := prometheus.NewConstMetric(m.desc, prometheus.GaugeValue, m.value)
