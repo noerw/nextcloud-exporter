@@ -12,6 +12,7 @@ import (
 
 var (
 	ErrNotAuthorized = errors.New("wrong credentials")
+	ErrRatelimit     = errors.New("too many requests")
 )
 
 type InfoClient func() (*serverinfo.ServerInfo, error)
@@ -49,6 +50,9 @@ func New(infoURL, username, password, authToken string, timeout time.Duration, u
 
 		if res.StatusCode == http.StatusUnauthorized {
 			return nil, ErrNotAuthorized
+		}
+		if res.StatusCode == http.StatusTooManyRequests {
+			return nil, ErrRatelimit
 		}
 
 		if res.StatusCode != http.StatusOK {
